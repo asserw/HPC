@@ -27,9 +27,9 @@
 
 #include <gtest/gtest.h>
 
-#include "atoms.h"
-#include "ducastelle.h"
-#include "neighbors.h"
+#include "../header/atoms.h"
+#include "../header/ducastelle.h"
+#include "../header/neighbors.h"
 
 TEST(DucastelleTest, Forces) {
     constexpr int nx = 2, ny = 2, nz = 2;
@@ -39,7 +39,7 @@ TEST(DucastelleTest, Forces) {
 
     double A = 0.2061, xi = 1.790, p = 10.229, q = 4.036, re = 4.079/sqrt(2);
 
-    NeighborList neighbor_list(cutoff);
+    NeighborList neighbor_list;
 
     Atoms atoms(nx * ny * nz);
 
@@ -56,7 +56,7 @@ TEST(DucastelleTest, Forces) {
         }
     }
 
-    neighbor_list.update(atoms);
+    neighbor_list.update(atoms,cutoff);
     atoms.forces.setZero();
     double e0{ducastelle(atoms, neighbor_list, cutoff, A, xi, p, q, re)};
     Forces_t forces0{atoms.forces};
@@ -67,11 +67,11 @@ TEST(DucastelleTest, Forces) {
         for (int j{0}; j < 3; ++j) {
             // move atom to the right
             atoms.positions(j, i) += delta;
-            neighbor_list.update(atoms);
+            neighbor_list.update(atoms,cutoff);
             double eplus{ducastelle(atoms, neighbor_list, cutoff, A, xi, p, q, re)};
             // move atom to the left
             atoms.positions(j, i) -= 2 * delta;
-            neighbor_list.update(atoms);
+            neighbor_list.update(atoms,cutoff);
             double eminus{ducastelle(atoms, neighbor_list, cutoff, A, xi, p, q, re)};
             // move atom back to original position
             atoms.positions(j, i) += delta;

@@ -7,6 +7,7 @@ lib_sources = [
     'neighbors.cpp',
     'lj_direct_summation_neighbors.cpp',
     'berendsen_thermostat.cpp',
+    'ducastelle.cpp' ,
 ]
 
 lib = static_library(

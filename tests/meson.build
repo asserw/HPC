@@ -7,6 +7,7 @@ test_sources = [
 	'test_lj_direct_summation.cpp',
 	'test_neighbors.cpp',
 	'test_berendsen_thermostat.cpp',
+	'test_ducastelle.cpp' ,
 ]
 
 tests = executable(

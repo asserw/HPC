@@ -1,7 +1,7 @@
-#include "hello.h"
+#include "../../header/hello.h"
 #include <Eigen/Dense>
-#include <iostream>
 #include <filesystem>
+#include <iostream>
 
 #ifdef USE_MPI
 #include <mpi.h>
@@ -24,7 +24,6 @@ int main(int argc, char *argv[]) {
 
     if (rank == 0)
       hello_eigen();
-
     auto input_path = "./simulation_test_input.txt";
 
     if (not std::filesystem::exists(input_path))
